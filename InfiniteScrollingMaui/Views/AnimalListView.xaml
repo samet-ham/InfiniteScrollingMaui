@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="InfiniteScrollingMaui.Views.AnimalListView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:InfiniteScrollingMaui.Models"
+    xmlns:viewModels="clr-namespace:InfiniteScrollingMaui.ViewModels"
+    Title="AnimalListView"
+    x:DataType="viewModels:AnimalListViewModel">
+    <StackLayout>
+        <ActivityIndicator
+            HeightRequest="40"
+            HorizontalOptions="Center"
+            IsRunning="True"
+            IsVisible="{Binding IsBusy}"
+            WidthRequest="40" />
+        <CollectionView
+            ItemsSource="{Binding AnimalList}"
+            RemainingItemsThreshold="1"
+            RemainingItemsThresholdReachedCommand="{Binding LoadMoreDataCommand}"
+            VerticalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:EntryDetails">
+                    <StackLayout Padding="10">
+                        <Label FontSize="20" Text="{Binding API}" />
+                        <Label FontSize="20" Text="{Binding Category}" />
+                        <Label FontSize="20" Text="{Binding Description}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Footer>
+                <ActivityIndicator
+                    HeightRequest="40"
+                    HorizontalOptions="Center"
+                    IsRunning="True"
+                    IsVisible="{Binding IsLoading}"
+                    WidthRequest="40" />
+            </CollectionView.Footer>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
